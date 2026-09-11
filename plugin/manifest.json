@@ -1,0 +1,23 @@
+{
+  "schemaVersion": 1,
+  "id": "powerup.power",
+  "name": "PowerUp",
+  "version": "1.0.0",
+  "author": "Omarchy",
+  "description": "Battery, power profile, and live system telemetry",
+  "kinds": [
+    "bar-widget"
+  ],
+  "entryPoints": {
+    "barWidget": "Panel.qml"
+  },
+  "barWidget": {
+    "displayName": "PowerUp",
+    "description": "Battery, power profile, and live system telemetry",
+    "category": "System",
+    "allowMultiple": false
+  },
+  "omarchy": {
+    "clonedFrom": "omarchy.power"
+  }
+}
