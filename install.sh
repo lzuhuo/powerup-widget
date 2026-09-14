@@ -3,12 +3,14 @@ set -euo pipefail
 
 project_dir="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)"
 plugin_dir="${XDG_CONFIG_HOME:-$HOME/.config}/omarchy/plugins/powerup.power"
+backup_root="${XDG_CONFIG_HOME:-$HOME/.config}/omarchy/plugin-backups"
 shell_config="${XDG_CONFIG_HOME:-$HOME/.config}/omarchy/shell.json"
 timestamp="$(date +%Y%m%d-%H%M%S)"
 
 mkdir -p "$plugin_dir"
 if [[ -e "$plugin_dir/Panel.qml" ]]; then
-  backup_dir="${plugin_dir}.backup.${timestamp}"
+  mkdir -p "$backup_root"
+  backup_dir="${backup_root}/powerup.power.${timestamp}"
   cp -a "$plugin_dir" "$backup_dir"
   printf 'Backup created at %s\n' "$backup_dir"
 fi
