@@ -28,7 +28,13 @@ path = sys.argv[1]
 with open(path, encoding="utf-8") as stream:
     config = json.load(stream)
 
-right = config.setdefault("bar", {}).setdefault("layout", {}).setdefault("right", [])
+layout = config.setdefault("bar", {}).setdefault("layout", {})
+for section in ("left", "center", "right"):
+    layout[section] = [
+        entry for entry in layout.get(section, [])
+        if not (isinstance(entry, dict) and entry.get("id") == "elizeu.power")
+    ]
+right = layout["right"]
 if not any(isinstance(entry, dict) and entry.get("id") == "powerup.power" for entry in right):
     right.append({"id": "powerup.power"})
 

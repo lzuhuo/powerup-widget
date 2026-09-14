@@ -50,11 +50,13 @@ Panel {
 
   function batteryIcon() {
     var device = UPower.displayDevice
+    if (!batteryPresent) return Model.profileIcon(activeProfile || "balanced")
     return Model.batteryIcon(device, root.discharging, upowerStates())
   }
 
   function modeLabel() {
     var device = UPower.displayDevice
+    if (!batteryPresent) return activeProfile || "Power profile"
     return Model.modeLabel(device, root.discharging, upowerStates())
   }
 
@@ -319,7 +321,9 @@ Panel {
     anchors.fill: parent
     bar: root.bar
     text: root.showPercentage && !vertical
-      ? Math.round(root.batteryFraction * 100) + "% " + root.batteryIcon()
+      ? root.batteryPresent
+        ? Math.round(root.batteryFraction * 100) + "% " + root.batteryIcon()
+        : root.profileIcon(root.activeProfile || "balanced")
       : root.batteryPresent
         ? root.batteryIcon()
         : root.profileIcon(root.activeProfile || "balanced")
@@ -388,7 +392,7 @@ Panel {
             spacing: Style.space(2)
 
             Text {
-              text: "Battery"
+              text: root.batteryPresent ? "Battery" : "Power"
               color: root.bar.foreground
               font.family: root.bar.fontFamily
               font.pixelSize: Style.font.title
@@ -414,7 +418,7 @@ Panel {
           Text {
             id: heroPercent
             textFormat: Text.PlainText
-            text: root.batteryInfo.percentage || "—"
+            text: root.batteryPresent ? (root.batteryInfo.percentage || "—") : "DESKTOP"
             color: root.bar.foreground
             font.family: root.bar.fontFamily
             font.pixelSize: Style.font.displayLarge
@@ -428,6 +432,7 @@ Panel {
 
         // ---------- Battery progress bar ----------
         Item {
+          visible: root.batteryPresent
           width: parent.width
           implicitHeight: Style.space(8)
 

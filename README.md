@@ -29,7 +29,9 @@ chmod +x install.sh
 
 The installer copies the plugin to
 `~/.config/omarchy/plugins/powerup.power`, adds it to the right side of the bar,
-and creates a timestamped backup if an existing copy is found.
+removes the legacy `elizeu.power` bar entry when present, and creates a
+timestamped backup if an existing `powerup.power` copy is found. The legacy
+plugin directory is left untouched but is no longer registered in the bar.
 
 To enable hardware sensors:
 

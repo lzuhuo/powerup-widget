@@ -24,7 +24,7 @@ for section in ("left", "center", "right"):
     entries = layout.get(section, [])
     layout[section] = [
         entry for entry in entries
-        if not (isinstance(entry, dict) and entry.get("id") == "powerup.power")
+        if not (isinstance(entry, dict) and entry.get("id") in ("powerup.power", "elizeu.power"))
     ]
 
 directory = os.path.dirname(path)
