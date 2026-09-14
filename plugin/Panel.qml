@@ -151,7 +151,7 @@ Panel {
     // around AC plug/unplug events. Avoids the section collapsing mid-transition.
     if (Object.keys(next).length === 0) return
     if (targetName === "battery") batteryInfo = next
-    else systemInfo = next
+    else systemInfo = Object.assign({}, systemInfo, next)
   }
 
   function updateSensors(raw) {
