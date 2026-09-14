@@ -16,6 +16,8 @@ Panel {
   property var batteryInfo: ({})
   property var systemInfo: ({})
   property var sensorInfo: ({})
+  property string loadAverage: ""
+  property string uptimeText: ""
   property var profiles: []
   property string activeProfile: ""
   property int profileIndex: 0
@@ -235,7 +237,7 @@ Panel {
       waitForEnd: true
       onStreamFinished: {
         var fields = text.trim().split(/\s+/)
-        if (fields.length > 0 && fields[0]) root.systemInfo = Object.assign({}, root.systemInfo, { load: fields[0] })
+        if (fields.length > 0 && fields[0]) root.loadAverage = fields[0]
       }
     }
   }
@@ -255,7 +257,7 @@ Panel {
         var value = days > 0
           ? days + "d " + hours + "h"
           : hours > 0 ? hours + "h " + minutes + "m" : minutes + "m"
-        root.systemInfo = Object.assign({}, root.systemInfo, { uptime: value })
+        root.uptimeText = value
       }
     }
   }
@@ -496,7 +498,7 @@ Panel {
             MetricCard {
               width: (parent.width - parent.spacing * 2) / 3
               label: "LOAD"
-              value: root.systemInfo.load || "—"
+              value: root.loadAverage || "—"
               accent: "#fbbf24"
             }
           }
@@ -520,7 +522,7 @@ Panel {
             MetricCard {
               width: (parent.width - parent.spacing * 2) / 3
               label: "UPTIME"
-              value: root.systemInfo.uptime || "—"
+              value: root.uptimeText || "—"
               accent: "#c084fc"
             }
           }
